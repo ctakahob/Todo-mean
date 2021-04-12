@@ -1,0 +1,91 @@
+.main-block {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  .main-wrapper {
+    background-color: rgb(209, 225, 242);
+    border: 1px solid;
+    min-height: 300px;
+    min-width: 220px;
+    box-shadow: 0 0 6px grey;
+    position: relative;
+
+    ul {
+      margin-top: 0;
+      padding-left: 13px;
+
+      a {
+        position: relative;
+        color: black;
+        cursor: pointer;
+        line-height: 1;
+        text-decoration: none;
+      }
+      a:after {
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background-color: green;
+        content: "";
+        transition: width 0.2s ease-out;
+      }
+
+      a:hover:after,
+      a:focus:after {
+        width: 100%;
+      }
+    }
+    .inputs {
+      position: inherit;
+      bottom: 0;
+
+      .example-full-width {
+        width: 90%;
+        margin-left: 5%;
+      }
+
+      button {
+        width: 90%;
+        margin-bottom: 10px;
+        margin-left: 5%;
+        background-color: green;
+      }
+    }
+  }
+
+  .upperInput {
+    margin-left: 8%;
+    .example-radio-group {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0;
+    }
+  }
+  .todoMain {
+    .todo {
+      list-style: none;
+      .done {
+        font-family: "Century Gothic";
+        text-decoration: line-through;
+      }
+
+      .unDone {
+        font-family: "Century Gothic";
+      }
+      .icon {
+        float: right;
+        color: red;
+        cursor: pointer;
+      }
+      .hide {
+        display: none;
+      }
+    }
+  }
+  .todoInput {
+    margin-left: 8%;
+  }
+}

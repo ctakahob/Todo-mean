@@ -1,0 +1,5 @@
+{
+  "port": 4201,
+  "mongoUri": "mongodb+srv://ctakah:nfQn6yWLmvDy6EOX@todo-claster.i3a1w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "baseUrl": "http://localhost:4201"
+}

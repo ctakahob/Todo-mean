@@ -1,0 +1,81 @@
+<div class="main-block">
+  <div class="main-wrapper">
+    <ng-container *ngIf="listOfLists; else elseBlock">
+      <h2>Todo lists MEAN</h2>
+      <ul *ngFor="let todoList of todoLists" (click)="inList(todoList._id)">
+        <a title="todo details"
+          >{{ todoList.title }} ({{ counterCompleted(todoList._id) }}/{{
+            counterAll(todoList._id)
+          }})</a>
+      </ul>
+      <div class="inputs">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>input new list here</mat-label>
+            <input
+              matInput
+              [(ngModel)]="newNameForList"
+              name="ListInput"
+              placeholder="Create new list"
+              value=""
+              (keyup.enter)="clickCreate()"
+              type="text"
+            />
+          </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" (click)="clickCreate()" [disabled]="!newNameForList">
+          Create
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #elseBlock>
+  <div class="upperInput">
+    <mat-form-field class="example-form-field">
+      <mat-label>Search</mat-label>
+      <input #SearchTodo (input)="searchValue($event)" matInput type="text" />
+    </mat-form-field>
+    <mat-radio-group
+      (change)="changeFilter($event)"
+      class="example-radio-group"
+      aria-label="Select an option"
+    >
+      <mat-radio-button value="false" checked>All</mat-radio-button>
+      <mat-radio-button value="true">Undone</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="todoMain">
+    <ul class="todo" *ngFor="let todo of todos">
+      <ng-container *ngIf="currentIdList === todo._idList">
+        <ng-container *ngIf='searchTodo(todo.title) || !searchText'>
+        <ng-container *ngIf="!filter || todo.completed !== filter">
+          <li [ngClass]="todo.completed ? 'done' : 'unDone'">
+            {{ todo.title }}
+            <mat-icon
+              class="icon"
+              title="press X to comlete this task"
+              (click)="changeDone(todo._id)"
+              [ngClass]="todo.completed ? 'hide' : 'icon'"
+              >clear</mat-icon>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    </ul>
+  </div>
+  <div class="todoInput">
+    <mat-form-field class="example-form-field">
+      <mat-label>Add todo...</mat-label>
+      <input
+        id="inputTodo"
+        #newTodoInput
+        placeholder="Create new Todo"
+        matInput
+        type="text"
+        (keyup.enter)="newTodo(newTodoInput.value)"
+      />
+    </mat-form-field>
+  </div>
+</ng-template>
