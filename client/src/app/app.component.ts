@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
   MatRadioChange,
   MAT_RADIO_DEFAULT_OPTIONS,
-} from '@angular/material/radio';
-import { HttpService } from './rest.datasource';
+} from "@angular/material/radio";
+import { HttpService } from "./rest.datasource";
 
 interface Todo {
   _id: string;
@@ -18,19 +18,19 @@ interface TodoList {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   providers: [
     HttpService,
     {
       provide: MAT_RADIO_DEFAULT_OPTIONS,
-      useValue: { color: 'primary' },
+      useValue: { color: "primary" },
     },
   ],
 })
 export class AppComponent implements OnInit {
-  titleHead = 'MEAN';
+  titleHead = "MEAN";
   filter = false;
   listOfLists = true;
   currentIdList: string;
@@ -38,10 +38,9 @@ export class AppComponent implements OnInit {
   searchText: RegExp;
   errorList: any;
   errorTodo: any;
-  noTodo = true;
   todoLists: TodoList[] = [];
   todos: Todo[] = [];
-  undeadSong: any;
+  inputTodo: string;
 
   constructor(private httpService: HttpService) {}
 
@@ -64,31 +63,22 @@ export class AppComponent implements OnInit {
     );
   }
 
-  playSound(sound: string): any {
-    sound = '../assets/sounds/' + sound + '.mp3';
-    // tslint:disable-next-line:no-unused-expression
-    sound && new Audio(sound).play();
-  }
-
   clickCreate(): void {
     if (this.newNameForList.trim()) {
       this.httpService.postList(this.newNameForList).subscribe(
         (data: TodoList) => {
-          (this.newNameForList = ''), this.todoLists.push(data);
+          (this.newNameForList = ""), this.todoLists.push(data);
         },
         (error) => console.log(error)
       );
     } else {
-      this.newNameForList = '';
+      this.newNameForList = "";
     }
   }
 
   inList(id: string): void {
     this.listOfLists = false;
     this.currentIdList = id;
-    if (!this.todos.filter((item) => item._idList === id).length) {
-      this.noTodo = false;
-    }
   }
 
   newTodo(value: string): void {
@@ -98,17 +88,10 @@ export class AppComponent implements OnInit {
         title: value,
         completed: false,
       };
-      this.httpService.postTodo(newCurrentTodo).subscribe(
-        (data: Todo) => {
-          this.todos.push(data),
-            (this.noTodo = true),
-            ((document.getElementById('inputTodo') as HTMLInputElement).value =
-              '');
-        },
-        (error) => console.log(error)
-      );
-    } else {
-      (document.getElementById('inputTodo') as HTMLInputElement).value = '';
+      this.httpService.postTodo(newCurrentTodo).subscribe((data: Todo) => {
+        this.todos.push(data);
+        this.inputTodo = "";
+      });
     }
   }
 
@@ -154,11 +137,7 @@ export class AppComponent implements OnInit {
 
   searchValue(Event: any): void {
     if (Event) {
-      this.searchText = new RegExp(Event.target.value, 'gi');
+      this.searchText = new RegExp(Event.target.value, "gi");
     }
-  }
-
-  searchTextReset(): void {
-    this.searchText = undefined;
   }
 }
